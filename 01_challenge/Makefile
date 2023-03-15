@@ -19,7 +19,8 @@ $(EXEC): %: %.o
 
 clean:
 	$(RM) *.o
-
+plot:
+	gnuplot -p plot.p
 distclean: clean
 	$(RM) $(EXEC) $(EXEC_MUPARSER)
 	$(RM) *~

@@ -49,12 +49,10 @@ public:
         auto h = (m_T-m_t0)/m_N;
         m_sol[0].push_back(m_t0);
         m_sol[1].push_back(m_x0);
-        std::cout << 0 << " un: " << m_x0 << std::endl;
 
         for (size_t n = 1; n < m_N; n++)
         {
             double un = step(m_fun, m_sol[1].back(), m_sol[0].back(), h, theta);
-            std::cout <<n << " un: " << un << std::endl;
             m_sol[0].push_back(n*h);
             m_sol[1].push_back(un);
         }
@@ -86,32 +84,19 @@ public:
             }
         }
     }
-    void save_solution(std::string filename){
-        if(m_sol[0].empty() || m_sol[1].empty()){
+    void save_solution(std::string filename = "solution.csv"){
+        if ((m_sol[0].empty() || m_sol[1].empty()) || (m_sol[1].size() != m_sol[0].size())){
             std::cerr << "You need to run the solve method first!" << std::endl;
         }
         else{
             std::ofstream solution(filename);
-            bool flag = true;
-            for (auto i : m_sol){
-                if (flag){
-                    solution << "tn: ";
-                }
-                else{
-                    solution << "un: ";
-                }
-                for (auto j : i)
-                {
-                    solution << j << ", ";
-                    if (i.back() == j){
-                        solution << j;
-                    }
-                }
-                solution << std::endl;
-                flag = false;
+            for (size_t i = 0; i < m_sol[0].size(); i++)
+            {
+                solution << m_sol[0][i] << "," << m_sol[1][i] << ";" << std::endl;
             }
         }
     }
+    
     void plot(void){
         if(!(m_sol[0].empty() || m_sol[1].empty())){
         Gnuplot gp; 
