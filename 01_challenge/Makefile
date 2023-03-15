@@ -16,7 +16,8 @@ all: $(EXEC)
 
 $(EXEC): %: %.o
 	$(CXX) $(CXXFLAGS)  $< -o $@
-
+exec:
+	./$(EXEC)
 clean:
 	$(RM) *.o
 plot:
