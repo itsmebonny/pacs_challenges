@@ -5,6 +5,11 @@
 #include <vector>
 #include "basicZeroFun.hpp"
 #include<tuple>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include "gnuplot-iostream.hpp"
+
 class cauchy_solver
 {
 private:
@@ -48,6 +53,32 @@ public:
             m_sol[1].push_back(un);
         }
         return m_sol;
+    }
+    void save_solution(std::string filename){
+        if(m_sol.empty()){
+            std::cerr << "You need to run the solve method first!" << std::endl;
+        }
+        std::ofstream solution(filename);
+        bool flag = true;
+        for (auto i : m_sol)
+        {
+            if (flag){
+                std::cout << "tn: ";
+                solution << "tn: ";
+            }
+            else{
+                std::cout << "un: ";
+                solution << "un: ";
+            }
+            for (auto j : i)
+            {
+                std::cout << j << ", ";
+                solution << j << ", ";
+            }
+            std::cout << std::endl;
+            solution << std::endl;
+            flag = false;
+        }
     }
 };
 
