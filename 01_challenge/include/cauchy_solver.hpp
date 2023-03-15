@@ -18,7 +18,7 @@ private:
     double m_x0;
     double m_t0;
     double m_T;
-    double m_N;
+    size_t m_N;
     std::array<std::vector<double>, 2> m_sol;
 
     double step(std::function<double (const double &, const double &)> fun, double x0, double t0, double h, double theta){
@@ -27,7 +27,7 @@ private:
             return x - h * theta * fun(t0+h, x) - h * (1 - theta) *  fn - x0;
         };
         double x1 = x0 + h * fn;
-        if (x0 == x1){ //because i'm stupid
+        if (x0 == x1){ //because i'm stupid and my interval has a problem with fn = 0
             x1 = x0 + h*fun(t0+h, x0);
         }
         std::tuple<double, bool> zero = apsc::secant <std::function<double (const double &)>> (fn1, x0, x1);
@@ -36,7 +36,7 @@ private:
     };
 
 public:
-    cauchy_solver(std::function<double (const double &, const double &)> fun, double  x0, double t0, double T, double N)
+    cauchy_solver(std::function<double (const double &, const double &)> fun, double  x0, double t0, double T, size_t N)
      : m_fun(fun), m_x0(x0), m_t0(t0), m_T(T), m_N(N) {};
     
     std::array<std::vector<double>, 2> solve(double theta = 0.5){
