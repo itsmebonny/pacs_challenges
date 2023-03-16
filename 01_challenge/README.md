@@ -7,7 +7,13 @@ A handy script is provided to load the necessary modules, just type
 >. modules.sh
 ### How to
 To run this code, simply open a terminal in this folder and then write
->. compile.sh
+>. compile_and_run.sh
+
+Otherwise,to compile it first and run later, simply write
+>make
+
+>make exec
+
 
 If you want to see a plot of the result simply type 
 
